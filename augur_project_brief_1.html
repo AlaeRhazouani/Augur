@@ -1,0 +1,246 @@
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+*{box-sizing:border-box}
+.card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sl{font-size:12px;color:var(--text-muted);margin:1rem 0 8px}
+.tp{display:none}.tp.on{display:block}
+.tnav{display:flex;border-bottom:0.5px solid var(--border);margin-bottom:1.25rem}
+.tb{padding:8px 16px;font-size:13px;cursor:pointer;color:var(--text-secondary);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tb.on{color:var(--text-primary);font-weight:500;border-bottom-color:var(--text-primary)}
+.pill{font-size:11px;padding:2px 9px;border-radius:20px;background:var(--surface-1);border:0.5px solid var(--border);color:var(--text-secondary);font-weight:500}
+.ml{border-left:2px solid var(--border-accent);border-radius:0;padding:8px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;background:var(--surface-1)}
+.jr{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:12px}
+.jr:last-child{border-bottom:none}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;display:inline-block;vertical-align:middle}
+.si{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--surface-2);border:0.5px solid var(--border);border-radius:var(--radius);font-size:12px;margin-bottom:4px}
+.wk{display:flex;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--border)}
+.wk:last-child{border-bottom:none}
+.wl{font-size:11px;font-weight:500;color:var(--text-muted);min-width:48px;padding-top:1px}
+.wd{font-size:12px;color:var(--text-primary);line-height:1.5}
+.anum{font-size:11px;font-weight:500;color:var(--text-muted);margin:0 0 3px}
+.aname{font-size:13px;font-weight:500;color:var(--text-primary);margin:0 0 4px}
+.adesc{font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6}
+.mobadge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--bg-pro);color:var(--text-pro);border:0.5px solid var(--border-pro)}
+.thesis{background:var(--bg-pro);border:0.5px solid var(--border-pro);border-radius:12px;padding:0.875rem 1rem;margin-bottom:1rem}
+.caution{background:var(--bg-danger);border:0.5px solid var(--border-danger);border-radius:12px;padding:0.875rem 1rem;margin-bottom:1rem}
+.trk{display:grid;grid-template-columns:100px 1fr 1fr;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:12px}
+.trk:last-child{border-bottom:none}
+.ckpt{border-left:2px solid var(--border-accent);padding:8px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;background:var(--surface-1)}
+</style>
+
+<h2 class="sr-only">Augur v2 — OSS dependency risk intelligence project brief: ranks PyPI and npm packages by near-term vulnerability risk against a popularity baseline, with leakage-controlled data, takeover detectors, and a continuous evaluation loop</h2>
+
+<div style="padding:1.25rem 0 0">
+
+<div style="padding-bottom:1.25rem;border-bottom:0.5px solid var(--border);margin-bottom:1.25rem">
+  <p style="font-size:22px;font-weight:500;margin:0 0 4px;color:var(--text-primary)">Augur <span style="font-size:13px;color:var(--text-muted);font-weight:400">v2</span></p>
+  <p style="font-size:14px;color:var(--text-secondary);margin:0 0 12px">OSS dependency risk intelligence — ranks packages by near-term vulnerability risk, and proves whether it beats a naive baseline</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span class="pill">Two tracks</span>
+    <span class="pill">Baseline-first</span>
+    <span class="pill">Leakage-controlled</span>
+    <span class="pill">Continuous eval</span>
+    <span class="pill" style="background:var(--bg-pro);border-color:var(--border-pro);color:var(--text-pro)">fills all skill gaps</span>
+    <span class="pill">12 weeks · solo</span>
+  </div>
+</div>
+
+<nav class="tnav" role="tablist">
+  <button class="tb on" role="tab" onclick="sw(this,'o')">Overview</button>
+  <button class="tb" role="tab" onclick="sw(this,'a')">Architecture</button>
+  <button class="tb" role="tab" onclick="sw(this,'r')">Roadmap</button>
+  <button class="tb" role="tab" onclick="sw(this,'i')">Portfolio impact</button>
+</nav>
+
+<div id="tp-o" class="tp on">
+<p class="sl" style="margin-top:0">What it does</p>
+<div class="card" style="margin-bottom:1rem">
+  <p style="font-size:13px;line-height:1.7;margin:0">Augur monitors the top 10,000 PyPI and npm packages — GitHub contributor activity, release patterns, dependency graphs, OpenSSF Scorecard checks and advisory history — and ranks them by the risk of a vulnerability advisory landing in the next 90 days. A second, separate module watches new releases for maintainer-takeover patterns. A tool-using assistant answers questions about a dependency tree with every claim tied to a retrieved OSV advisory ID. The whole system re-scores itself weekly against newly published advisories, and the CI pipeline blocks changes that make it worse.</p>
+</div>
+
+<div class="thesis">
+  <p style="font-size:13px;font-weight:500;margin:0 0 5px;color:var(--text-pro)">The falsifiable thesis</p>
+  <p style="font-size:12px;color:var(--text-pro);margin:0;line-height:1.6">Do public repository-health signals rank packages by near-term vulnerability risk <span style="font-weight:500">better than popularity alone</span>? Every model is measured against a popularity-only baseline, and the lift over that baseline is the headline number. Three outcomes are all presentable: clear lift means a working predictor; small lift means a feature-level explanation of what carries signal; no lift is a rigorous negative result, which is a stronger interview story than an inflated positive one. The engineering thesis stands alongside it: an AI system is production-ready only when it is observable, continuously evaluated and gated in CI.</p>
+</div>
+
+<p class="sl">Two tracks, not one problem</p>
+<div class="card" style="margin-bottom:1rem">
+  <div class="trk" style="border-bottom:0.5px solid var(--border-strong)"><span style="font-size:11px;font-weight:500;color:var(--text-muted)"></span><span style="font-size:11px;font-weight:500;color:var(--text-muted)">Track A — Risk ranking</span><span style="font-size:11px;font-weight:500;color:var(--text-muted)">Track B — Takeover detection</span></div>
+  <div class="trk"><span style="color:var(--text-muted)">Question</span><span style="color:var(--text-secondary)">Which packages get an advisory in the next 90 days?</span><span style="color:var(--text-secondary)">Does this release look like a hijack or sabotage?</span></div>
+  <div class="trk"><span style="color:var(--text-muted)">Cause</span><span style="color:var(--text-secondary)">Ordinary bugs found by researchers and fuzzers</span><span style="color:var(--text-secondary)">Hijacked accounts, malicious maintainers, protestware</span></div>
+  <div class="trk"><span style="color:var(--text-muted)">Labels</span><span style="color:var(--text-secondary)">OSV advisories for PyPI and npm — thousands</span><span style="color:var(--text-secondary)">8–12 curated incidents — too few to train on</span></div>
+  <div class="trk"><span style="color:var(--text-muted)">Method</span><span style="color:var(--text-secondary)">Supervised ML — LightGBM vs baselines</span><span style="color:var(--text-secondary)">Transparent rules with tuned thresholds</span></div>
+  <div class="trk"><span style="color:var(--text-muted)">Metric</span><span style="color:var(--text-secondary)">PR-AUC, precision@k, lift over popularity</span><span style="color:var(--text-secondary)">Detection lead time, false alarms per 1,000 pkg-months</span></div>
+</div>
+
+<p class="sl">Real problem it solves</p>
+<div class="g2" style="margin-bottom:1rem">
+  <div class="card">
+    <p style="font-size:13px;font-weight:500;margin:0 0 5px">Reactive security tools tell you too late</p>
+    <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6">Snyk, Dependabot and Renovate all work the same way: an advisory is published, then they alert you. Augur reframes the question as triage — given finite review time, which dependencies deserve attention first, before anything is disclosed? That is a ranking problem, and ranking problems can be measured honestly.</p>
+  </div>
+  <div class="card">
+    <p style="font-size:13px;font-weight:500;margin:0 0 5px">The market is paying for exactly this</p>
+    <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6">Socket.dev raised $20M for pre-publication supply chain analysis; Snyk is valued in the billions; commercial tools charge per developer per month. None of them publish their baselines or their error rates. Augur is the open, self-hosted version that shows its evaluation in full — including where it fails.</p>
+  </div>
+</div>
+
+<div class="caution">
+  <p style="font-size:13px;font-weight:500;margin:0 0 5px;color:var(--text-danger)">The two traps this design exists to avoid</p>
+  <p style="font-size:12px;color:var(--text-danger);margin:0;line-height:1.6"><span style="font-weight:500">Confounding.</span> Popular, actively maintained packages get more advisories because more people audit them. A naive model learns "busy and popular = risky", which is the opposite of the intended story — hence the mandatory popularity baseline at every rung. <span style="font-weight:500">Leakage.</span> Fix commits and security releases usually land before the advisory is published, so a model anchored on publication date quietly learns to detect the fix already in progress. Augur anchors labels on the earliest disclosure signal and drops a 7-day blackout window before it. Both are tested, not assumed.</p>
+</div>
+
+<p class="sl">Why it stands out technically</p>
+<div class="card" style="margin-bottom:1rem">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;gap:10px"><i class="ti ti-check" style="color:var(--text-success);flex-shrink:0;font-size:16px;margin-top:2px" aria-hidden="true"></i><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">Baselines are built before the model.</span> B0 ranks by downloads, B1 by prior advisory count, B2 is logistic regression on both. Nothing is claimed as a result until it clears them by more than a bootstrap confidence interval. Most portfolio projects have no baseline at all.</p></div>
+    <div style="display:flex;gap:10px"><i class="ti ti-check" style="color:var(--text-success);flex-shrink:0;font-size:16px;margin-top:2px" aria-hidden="true"></i><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">Leakage is controlled and demonstrated.</span> Strict time-based splits, features computed only from data dated before the snapshot, a unit test that fails if a feature query reaches past it, and a deliberate ablation showing what the metrics look like when the controls are removed. Very few candidates can discuss leakage from their own work.</p></div>
+    <div style="display:flex;gap:10px"><i class="ti ti-check" style="color:var(--text-success);flex-shrink:0;font-size:16px;margin-top:2px" aria-hidden="true"></i><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">The evaluation loop is the product.</span> Weekly backtests on newly closed label windows, registry promotion gated on significant improvement, RAGAS in CI failing the build on faithfulness regression, and Prometheus alerts on precision decay. This is the MLOps job description, demonstrated rather than listed.</p></div>
+    <div style="display:flex;gap:10px"><i class="ti ti-check" style="color:var(--text-success);flex-shrink:0;font-size:16px;margin-top:2px" aria-hidden="true"></i><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">Deployable as a GitHub Action.</span> A standalone action that scans requirements.txt or package.json and returns a ranked risk report is an artifact engineers can actually install — and it makes the repo self-demonstrating.</p></div>
+  </div>
+</div>
+
+<p class="sl">Free data sources — bulk for history, APIs for the daily refresh</p>
+<div class="g2">
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">OSV.dev bulk export</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Ecosystem-native advisories for PyPI and npm with published dates and fixed versions. The label source — cleaner than mapping NVD's CPE strings back to packages.</p></div>
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">GH Archive via BigQuery</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Historical commits, contributors, issues and releases per repo, queryable by date partition. This replaces months of GitHub API crawling; 1 TB of queries per month is free.</p></div>
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">deps.dev + OpenSSF Scorecard</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Package-to-repo mapping, dependency graphs and weekly security-practice scores — branch protection, code review, fuzzing, pinned dependencies. Both free via BigQuery.</p></div>
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">PyPI + npm registries</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Download trends, release history, per-version publisher identity (npm), maintainer changes. Free, no auth for read access. Used for popularity features and the daily refresh.</p></div>
+</div>
+</div>
+
+<div id="tp-a" class="tp">
+<p class="sl" style="margin-top:0">Five components, each named for what it is</p>
+<div class="card" style="margin-bottom:0.75rem">
+  <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6">Only one of these is an agent. Calling an ETL job an "IngestionAgent" reads as agent-washing to senior engineers; naming things honestly reads as more mature, not less ambitious. The custom Python orchestrator stays — shared state, intent routing, retries with backoff, and a fallback chain to plain retrieval — because that is where the real coordination work is.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:1.25rem">
+  <div class="card"><p class="anum">Component 01 · Ingestion pipeline</p><p class="aname">Backfill and daily refresh</p><p class="adesc">Historical backfill from BigQuery: GH Archive activity, Scorecard checks, download history, joined to the 10,000-package universe via deps.dev. Daily refresh from the registries and the GitHub API. Every record validated against a Pydantic schema before it lands in TimescaleDB. Cron first, Airflow later if time allows.</p></div>
+  <div class="card"><p class="anum">Component 02 · Risk model service</p><p class="aname">Weekly ranking, Track A</p><p class="adesc">One row per package per weekly snapshot, labeled positive if an advisory event falls 7–90 days ahead, with the 7-day blackout dropped entirely. LightGBM over seven feature families, benchmarked against B0/B1/B2, calibrated with isotonic regression, tracked in MLflow. Registry promotion requires beating production PR-AUC by more than the bootstrap interval — not just any F1 improvement.</p></div>
+  <div class="card"><p class="anum">Component 03 · Takeover detectors</p><p class="aname">Rule-based anomaly flags, Track B</p><p class="adesc">Six transparent detectors: first-time publisher on a version, registry–repo mismatch, new install hook in a patch release, surprise young dependency, dormancy break by a new account, and maintainer handover. Each emits a flag with an explanation string. Thresholds tuned on three design incidents, then frozen before the held-out test.</p></div>
+  <div class="card"><p class="anum">Component 04 · Security assistant</p><p class="aname">The one real agent</p><p class="adesc">Four tools — get_risk_score, get_takeover_flags, scan_manifest, search_advisories — over retrieval scoped to advisories for the 10,000-package universe rather than all 200K+ CVEs. Smaller corpus, faster evaluation, same skill signal. A post-check rejects any answer citing an OSV ID that was not actually retrieved. Open-weights LLM via Groq or Ollama, chosen in week 9 from what the free tier offers then.</p></div>
+  <div class="card"><p class="anum">Component 05 · Evaluation service</p><p class="aname">The differentiator</p><p class="adesc">Weekly backtest of the risk model on newly closed label windows, RAGAS scoring on a 60-query golden set, CI gates in GitHub Actions that fail on faithfulness regression, and Prometheus metrics for both LLM quality and precision decay. This is the component that turns a demo into an LLMOps system, and it is never cut.</p></div>
+</div>
+
+<p class="sl">Tech stack</p>
+<div style="display:flex;gap:12px;font-size:12px;color:var(--text-secondary);margin-bottom:10px;align-items:center">
+  <div style="display:flex;align-items:center;gap:5px"><span class="dot" style="background:var(--text-warning)"></span>New skill (fills gap)</div>
+  <div style="display:flex;align-items:center;gap:5px"><span class="dot" style="background:var(--text-success)"></span>Existing strength deepened</div>
+</div>
+<div class="g2">
+  <div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>BigQuery — historical backfill at scale</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>TimescaleDB — package snapshot time series</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>LightGBM + SHAP — risk ranking and attribution</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>MLflow — experiment tracking + gated registry</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>Qdrant — advisory vector store</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>RAGAS — RAG + citation evaluation</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>Kubernetes (OKE) + Helm — production deploy</div>
+    <div class="si"><span class="dot" style="background:var(--text-warning)"></span>Apache Airflow — ingestion DAGs (late, optional)</div>
+  </div>
+  <div>
+    <div class="si"><span class="dot" style="background:var(--text-success)"></span>Open-weights LLM via Groq / Ollama — assistant</div>
+    <div class="si"><span class="dot" style="background:var(--text-success)"></span>FastAPI — async Python backend</div>
+    <div class="si"><span class="dot" style="background:var(--text-success)"></span>Docker Compose — local dev stack</div>
+    <div class="si"><span class="dot" style="background:var(--text-success)"></span>GitHub Actions — CI/CD + eval gates</div>
+    <div class="si"><span class="dot" style="background:var(--text-success)"></span>Prometheus + Grafana — monitoring + alerts</div>
+    <div class="si"><span class="dot" style="background:var(--text-success)"></span>Python / pandas — feature engineering</div>
+  </div>
+</div>
+<p class="sl">Dropped from v1, and why</p>
+<div class="card">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6"><span style="font-weight:500;color:var(--text-primary)">TFT / darts.</span> This is binary classification on windowed tabular features with few positives, not multi-horizon sequence forecasting. LightGBM trains in minutes and will most likely win. "Why TFT?" is a question that would not have had a good answer. It stays as a stretch goal only if it beats LightGBM on the same split.</p>
+    <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6"><span style="font-weight:500;color:var(--text-primary)">Prophet baseline.</span> A univariate time-series forecaster is not a baseline for a classification task. Replaced by B0–B2.</p>
+    <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6"><span style="font-weight:500;color:var(--text-primary)">NVD as the label source.</span> Mapping CPE strings back to PyPI and npm packages is messy and lossy. OSV is ecosystem-native and ships a bulk export per ecosystem.</p>
+    <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6"><span style="font-weight:500;color:var(--text-primary)">Live GitHub API for history.</span> Reconstructing metrics at T-90 for thousands of packages would hit rate limits for months. BigQuery does it in queries.</p>
+  </div>
+</div>
+</div>
+
+<div id="tp-r" class="tp">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="mobadge">Month 1</span><span style="font-size:14px;font-weight:500">Leakage-safe dataset and the first honest number</span></div>
+<div class="card" style="margin-bottom:0.75rem">
+  <div class="wk"><div class="wl">Week 1</div><div class="wd">Parse the OSV bulk export for PyPI and npm. Map packages to repos via deps.dev. Fix the universe at the top 10,000 packages by downloads and record the mapping coverage you actually achieve.</div></div>
+  <div class="wk"><div class="wl">Week 2</div><div class="wd">BigQuery extraction: GH Archive activity, OpenSSF Scorecard history, download history. Materialize small intermediate tables, load into TimescaleDB. Done when one package's full history is queryable end to end.</div></div>
+  <div class="wk"><div class="wl">Week 3</div><div class="wd">Weekly snapshot table, label definition with the 7-day blackout, time-based splits, and the leakage unit test. Write down the base rate and class counts — that number shapes every metric that follows.</div></div>
+  <div class="wk"><div class="wl">Week 4</div><div class="wd">Baselines B0–B2, then the first LightGBM, all logged to MLflow. FastAPI shell and Docker Compose stack. <span style="font-weight:500">Checkpoint 1.</span></div></div>
+</div>
+<div class="ckpt" style="margin-bottom:1.25rem"><span style="font-weight:500">Checkpoint 1 — week 4.</span> If repo-mapping coverage is below roughly 60% of the universe, shrink to one ecosystem; npm has the better per-version publisher data. If LightGBM does not beat B2 at all, keep going — the thesis becomes the negative result, and weeks 5–7 become the explanation of why.</div>
+
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="mobadge">Month 2</span><span style="font-size:14px;font-weight:500">Explanation, takeover detectors, and the evaluation loop</span></div>
+<div class="card" style="margin-bottom:0.75rem">
+  <div class="wk"><div class="wl">Week 5</div><div class="wd">Feature-family ablations, SHAP attribution, isotonic calibration, and hand-read error analysis on 20 false positives and 20 false negatives. Findings written into the repo, not just plotted.</div></div>
+  <div class="wk"><div class="wl">Week 6</div><div class="wd">Build the six takeover detectors against the design set — event-stream (2018), ua-parser-js (2021), ctx (2022). Rebuild each timeline from primary sources and verify every date before it goes in the README.</div></div>
+  <div class="wk"><div class="wl">Week 7</div><div class="wd">Freeze thresholds, then run the held-out incident test once: coa/rc, colors/faker, node-ipc, ultralytics, @solana/web3.js. Measure false alarms against a 500-package control set. Results recorded as they come out.</div></div>
+  <div class="wk"><div class="wl">Week 8</div><div class="wd">Evaluation service: weekly backtest job on newly closed windows, registry promotion gate, custom Prometheus metrics, Grafana dashboard. <span style="font-weight:500">Checkpoint 2.</span></div></div>
+</div>
+<div class="ckpt" style="margin-bottom:1.25rem"><span style="font-weight:500">Checkpoint 2 — week 8.</span> If you are more than one week behind, apply cuts 1 and 2 before starting the assistant. The evaluation loop ships before the chatbot, always — it is the part that differentiates the project.</div>
+
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="mobadge">Month 3</span><span style="font-size:14px;font-weight:500">Assistant, CI gates, and deployment</span></div>
+<div class="card" style="margin-bottom:0.75rem">
+  <div class="wk"><div class="wl">Week 9</div><div class="wd">Security assistant: four tools, scoped retrieval over the universe's advisories, the citation post-check, and the custom orchestrator with routing, retries and a retrieval-only fallback. Done when it answers 10 sample queries with valid, retrieved OSV citations.</div></div>
+  <div class="wk"><div class="wl">Week 10</div><div class="wd">60-query golden set across factual lookup, risk assessment, comparison and hallucination-resistance. RAGAS wired into GitHub Actions. Done when a deliberately regressed prompt fails the build.</div></div>
+  <div class="wk"><div class="wl">Week 11</div><div class="wd">GitHub Action packaging for requirements.txt and package.json, running on a public demo repo. Minimal React dashboard if time allows; Grafana plus the Action output is enough on its own.</div></div>
+  <div class="wk"><div class="wl">Week 12</div><div class="wd">Helm chart and OKE deploy, or Compose if cut. README with real test-set numbers and confidence intervals, architecture diagram, demo video. <span style="font-weight:500">Checkpoint 3.</span></div></div>
+</div>
+<div class="ckpt"><span style="font-weight:500">Checkpoint 3 — week 12.</span> No resume bullet goes out without its number coming from the test set, with its confidence interval, written in the README. An unverifiable number is worse than a modest one.</div>
+
+<p class="sl">Cut order under time pressure</p>
+<div class="card">
+  <div class="wk"><div class="wl">Cut 1</div><div class="wd">React dashboard — a Grafana dashboard plus the GitHub Action output carries the same signal.</div></div>
+  <div class="wk"><div class="wl">Cut 2</div><div class="wd">Airflow — stay on cron, document the DAG design in the README.</div></div>
+  <div class="wk"><div class="wl">Cut 3</div><div class="wd">Kubernetes — stay on Docker Compose with a Helm chart that is written and linted but not deployed.</div></div>
+  <div class="wk"><div class="wl">Cut 4</div><div class="wd">Golden set from 60 queries to 30.</div></div>
+  <div class="wk"><div class="wl">Never</div><div class="wd" style="font-weight:500">Baselines B0–B2, the leakage test, time-split evaluation, the registry gate, the CI eval gate. These are what make the project credible.</div></div>
+</div>
+</div>
+
+<div id="tp-i" class="tp">
+<p class="sl" style="margin-top:0">Resume bullet templates — fill the brackets from the README after week 12</p>
+<div class="card" style="margin-bottom:0.75rem">
+  <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6">These are templates, deliberately not numbers. Every bracket is filled from the test set once the build is finished. A modest real result with honest analysis interviews better than a suspiciously clean one — and an interviewer who probes an invented figure ends the conversation there.</p>
+</div>
+<div class="ml">"Built a leakage-controlled dataset of <span style="font-weight:500">[N] weekly package snapshots</span> across [N] PyPI/npm packages from OSV, GH Archive and OpenSSF Scorecard — 7-day blackout window, strict time-based splits, and a unit test that fails on any forward-looking feature query"</div>
+<div class="ml">"Trained a LightGBM risk model reaching <span style="font-weight:500">PR-AUC [X] vs [Y] for a popularity baseline</span> ([Z]× lift at top-100), tracked in MLflow with registry promotion gated on bootstrap-significant improvement"</div>
+<div class="ml">"Designed six supply-chain takeover detectors — flagged <span style="font-weight:500">[N] of [M] held-out npm/PyPI incidents</span> at [X] false alarms per 1,000 package-months, thresholds frozen before the held-out test"</div>
+<div class="ml">"Shipped a tool-using security assistant with <span style="font-weight:500">citation-verified answers</span> — RAGAS evaluation runs in GitHub Actions and blocks prompt regressions before merge"</div>
+<div class="ml" style="margin-bottom:1.25rem">"GitHub Action scans <span style="font-weight:500">requirements.txt / package.json</span> and returns a ranked risk report inline — self-demonstrating portfolio artifact usable by any engineer"</div>
+
+<p class="sl">JD requirement alignment</p>
+<div class="card" style="margin-bottom:1.25rem">
+  <div class="jr" style="border-bottom:0.5px solid var(--border-strong)"><span style="font-size:11px;font-weight:500;color:var(--text-muted)">JD requirement</span><span style="font-size:11px;font-weight:500;color:var(--text-muted)">What Augur delivers</span><span style="font-size:11px;font-weight:500;color:var(--text-muted)">Interview demo</span></div>
+  <div class="jr"><span>RAG + vector DBs</span><span style="color:var(--text-secondary)">Scoped Qdrant retrieval over universe advisories</span><span style="color:var(--text-muted)">Citation post-check walkthrough</span></div>
+  <div class="jr"><span>LLM evaluation</span><span style="color:var(--text-secondary)">RAGAS on a 60-query golden set, CI gate</span><span style="color:var(--text-muted)">A regressed prompt failing the build</span></div>
+  <div class="jr"><span>Multi-agent systems</span><span style="color:var(--text-secondary)">Custom orchestrator: routing, state, fallback chain</span><span style="color:var(--text-muted)">Retry and degradation design</span></div>
+  <div class="jr"><span>MLOps lifecycle</span><span style="color:var(--text-secondary)">MLflow tracking, registry, significance-gated promotion</span><span style="color:var(--text-muted)">Why F1-improvement gates promote on noise</span></div>
+  <div class="jr"><span>Applied ML</span><span style="color:var(--text-secondary)">LightGBM vs three baselines, SHAP, calibration</span><span style="color:var(--text-muted)">Feature ablation and error analysis</span></div>
+  <div class="jr"><span>Data engineering</span><span style="color:var(--text-secondary)">BigQuery backfill, TimescaleDB, Pydantic validation</span><span style="color:var(--text-muted)">Leakage controls and time splits</span></div>
+  <div class="jr"><span>Production monitoring</span><span style="color:var(--text-secondary)">Prometheus + Grafana, precision-decay alerts</span><span style="color:var(--text-muted)">Weekly backtest on closed windows</span></div>
+  <div class="jr"><span>Kubernetes</span><span style="color:var(--text-secondary)">OKE deployment, Helm chart for all services</span><span style="color:var(--text-muted)">Manifest and chart walkthrough</span></div>
+</div>
+
+<p class="sl">Interview positioning — lead in this order</p>
+<div class="card" style="margin-bottom:1.25rem">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;gap:10px"><span style="font-size:11px;font-weight:500;color:var(--text-muted);min-width:14px;padding-top:2px">1</span><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">The baseline.</span> "My first question was whether health signals beat popularity at all." This signals scientific thinking in one sentence, before any architecture is described.</p></div>
+    <div style="display:flex;gap:10px"><span style="font-size:11px;font-weight:500;color:var(--text-muted);min-width:14px;padding-top:2px">2</span><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">The leakage story.</span> The blackout window, the time splits, and the ablation showing what the metrics look like without them. Few candidates can discuss leakage from their own project.</p></div>
+    <div style="display:flex;gap:10px"><span style="font-size:11px;font-weight:500;color:var(--text-muted);min-width:14px;padding-top:2px">3</span><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">The evaluation loop.</span> Weekly backtests, the registry gate, the CI gate — how you know it still works next month, not just on demo day.</p></div>
+    <div style="display:flex;gap:10px"><span style="font-size:11px;font-weight:500;color:var(--text-muted);min-width:14px;padding-top:2px">4</span><p style="font-size:13px;margin:0;line-height:1.6"><span style="font-weight:500">Then the architecture.</span> If XZ Utils comes up, say it inspired the maintainer-trust features but is out of scope for a PyPI/npm system — it is a C library — and pivot to the event-stream result.</p></div>
+  </div>
+</div>
+
+<p class="sl">Target roles this project unlocks</p>
+<div class="g3">
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">AI / LLM engineer</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Tool-using agent, scoped retrieval, citation verification, eval harness in CI — complete signal for senior interviewers.</p></div>
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">MLOps / AI platform engineer</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">MLflow, gated registry, backtest jobs, K8s, Helm, monitoring — this is the exact job description.</p></div>
+  <div class="card"><p style="font-size:13px;font-weight:500;margin:0 0 4px">AI security engineer</p><p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Supply-chain threat modeling with an honest evaluation protocol — a third role family, and the fastest-growing intersection.</p></div>
+</div>
+</div>
+
+</div>
+<script>
+function sw(btn,id){document.querySelectorAll('.tp').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on')});document.getElementById('tp-'+id).classList.add('on');btn.classList.add('on')}
+</script>
