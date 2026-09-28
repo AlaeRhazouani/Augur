@@ -67,3 +67,27 @@ For these, the event date may be too late (most bugs with a known fix had the fi
 so their labels are less trustworthy. Revisit in week 3: check whether results change when they are excluded.
 Known causes: the package isn't really distributed on the registry (e.g. saleor on PyPI),
 or OSV has a malformed name (e.g. "novu/api" instead of "@novu/api").
+
+## 9. The package universe is the top 5,000 per ecosystem by *current* downloads
+**Date:** 2026-09-27
+**Decision:** The universe is the top 5,000 PyPI packages (hugovk's top-pypi-packages list,
+30-day downloads, updated 2026-09-01) and the top 5,000 npm packages (ecosyste.ms, last month's downloads).
+**Why:** These are the packages most teams actually depend on, and both lists are free and reproducible.
+Only 9.5% of the PyPI universe (477) and about 9% of the npm universe (~457) have ever had an advisory,
+so labels will be heavily imbalanced.
+**Known limitation (survivorship bias):** the ranking is from today, but the history goes back years.
+Packages that became popular recently are included; packages that were popular earlier but declined
+(possibly because of security problems) are not. There is no free source of historical npm rankings.
+For PyPI, historical downloads exist in BigQuery; revisit in week 2.
+
+## 10. Map packages to GitHub repositories through deps.dev
+**Date:** 2026-09-28
+**Decision:** For each universe package, take the SOURCE_REPO links of its current version on deps.dev,
+keep those on github.com, ignore github.com/sponsors/ links (donation pages, not code),
+and use the first remaining one.
+**Why:** deps.dev covers both ecosystems with one API. Coverage: 4,472 of 5,000 PyPI packages (89%)
+and 4,909 of 5,000 npm packages (98%), far above the 60% threshold of Checkpoint 1, so both ecosystems stay.
+**Known limitation:** a few packages list two real-looking repos (e.g. numpy: numpy/numpy and numpy/numpy-release);
+the first one is used without checking. Under 1% of the universe.
+Most links are UNVERIFIED_METADATA (typed in by the maintainer), which is also what the
+Track B registry–repo mismatch detector will look at.
